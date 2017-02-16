@@ -53,6 +53,8 @@ class BlogPage(Handler):
         # self.render_blog()
 
 class NewPost(Handler):
+
+##shoudl i put in get(self, error) to get this to work?
     def get(self):
         self.render("newpost.html")
 
@@ -64,14 +66,14 @@ class NewPost(Handler):
 
         if not title:
             error_title = "Please provide a title"
-            have_error = False
+            have_error = True
 
         if not blog_text:
             error_text = "Please provide a blog post"
-            have_error = False
+            have_error = True
 
         if have_error:
-            self.render("newpost.html",title, blog_text, error_text, error_title)
+            self.render("newpost.html",title=title, blog_text=blog_text, error_text=error_text, error_title=error_title)
 
         else:
             a = Blog(title=title, blog_text=blog_text)
