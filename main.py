@@ -62,6 +62,8 @@ class NewPost(Handler):
         title = self.request.get("title")
         blog_text = self.request.get("blog_text")
         have_error = False
+        error_title = ""
+        error_text = ""
 
 
         if not title:
@@ -80,8 +82,19 @@ class NewPost(Handler):
             a.put()
             self.redirect('/blog')
 
+class ViewPostHandler(Handler):
+    def get(self, id):
+        if Blog.get_by_id:
+            self.response.out.write(Blog.get_by_id)
+            # self.response.out.write("sorry that blog post does not exist")
+
+        else:
+            self.response.out.write("sorry that blog post does not exist")
+            # self.response.out.write(Blog.get_by_id)
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/blog', BlogPage),
-    ('/newpost', NewPost)
+    ('/newpost', NewPost),
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
 ], debug=True)
