@@ -84,9 +84,14 @@ class NewPost(Handler):
 
 class ViewPostHandler(Handler):
     def get(self, id):
-        if Blog.get_by_id:
-            self.response.out.write(Blog.get_by_id)
-            # self.response.out.write("sorry that blog post does not exist")
+
+        post = Blog.get_by_id(int(id))
+        if Blog.get_by_id(int(id)):
+            # self.render("blog.html", id = Blog.get_by_id(int(id)), blog_posts = blog_posts.title)
+            #self.response.out.write("sorry that blog post does not exist")
+            t = jinja_env.get_template("post.html")
+            content = t.render(post = post)
+            self.response.write(content)
 
         else:
             self.response.out.write("sorry that blog post does not exist")
